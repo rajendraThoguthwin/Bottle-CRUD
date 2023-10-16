@@ -3,8 +3,8 @@ import sqlite3
 
 app = Bottle()
 
-# Database setup
-conn = sqlite3.connect('example.db')
+
+conn = sqlite3.connect('bottle.db')
 cursor = conn.cursor()
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS tasks (
@@ -14,7 +14,7 @@ cursor.execute('''
 ''')
 conn.commit()
 
-# Create operation
+
 @app.route('/task', method='GET')
 def create_form():
     return template('create_task')
@@ -26,14 +26,14 @@ def create_task():
     conn.commit()
     redirect('/')
 
-# Read operation
+
 @app.route('/')
 def index():
     cursor.execute('SELECT * FROM tasks')
     tasks = cursor.fetchall()
     return template('index', tasks=tasks)
 
-# Update operation
+
 @app.route('/edit/<task_id>', method='GET')
 def edit_form(task_id):
     cursor.execute('SELECT * FROM tasks WHERE id=?', (task_id,))
@@ -47,7 +47,7 @@ def edit_task(task_id):
     conn.commit()
     redirect('/')
 
-# Delete operation
+
 @app.route('/delete/<task_id>')
 def delete_task(task_id):
     cursor.execute('DELETE FROM tasks WHERE id=?', (task_id,))
