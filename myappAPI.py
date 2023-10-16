@@ -3,11 +3,11 @@ import sqlite3
 
 app = Bottle()
 
-# SQLite setup
+
 conn = sqlite3.connect('mydatabase.db')
 cursor = conn.cursor()
 
-# Create table if not exists
+
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS tasks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
